@@ -1,13 +1,4 @@
-![FirstHand Banner](./Media/banner.png "FirstHand")
 
-# First Hand
-
-First Hand is an example of a full game experience using *[Interaction SDK](https://developer.oculus.com/documentation/unity/unity-isdk-interaction-sdk-overview/)* for interactions. It is designed to be used with hand tracking. This Unity project contains the interactable elements from the full First Hand experience, presented without the gameplay or progression of the full app.
-
-# AppLab
-You can find the full version of the First Hand app on AppLab:
-
-https://www.oculus.com/experiences/quest/5030224183773255/
 
 ## Licenses
 The *Oculus Integration* package is released under the *[Oculus SDK License Agreement](https://developer.oculus.com/licenses/oculussdk)*.
@@ -19,11 +10,6 @@ Otherwise, if an individual file does not indicate which license it is subject t
 First, ensure you have Git LFS installed by running this command:
 ```sh
 git lfs install
-```
-
-Then, clone this repo using the "Code" button above, or this command:
-```sh
-git clone https://github.com/oculus-samples/Unity-FirstHand.git
 ```
 
 All of the actual project files are in Assets/Project. This folder includes all scripts and assets to run the sample, excluding those that are part of the Interaction SDK.
