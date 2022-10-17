@@ -193,7 +193,7 @@ class ONSPAudioPluginUpdater
                         File.Delete(newX64PluginPath);
                         File.Delete(newX64PluginPath + ".meta");
                     }
-                    catch (Exception e)
+                    catch (Exception e) 
                     {
                         UnityEngine.Debug.LogWarning("Exception happened when deleting new spatializer plugin: " + e.Message);
                     }
@@ -224,9 +224,9 @@ class ONSPAudioPluginUpdater
 #if UNITY_2017_3_OR_NEWER
                         pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
+			            pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+			            pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
+			            pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
 #endif
                         pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows, true);
                         pi.SetCompatibleWithEditor(true);
@@ -267,9 +267,9 @@ class ONSPAudioPluginUpdater
 #if UNITY_2017_3_OR_NEWER
                         pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSX, false);
 #else
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
-                        pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
+		                pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXUniversal, false);
+		                pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel, false);
+		                pi.SetCompatibleWithPlatform(BuildTarget.StandaloneOSXIntel64, false);
 #endif
                         pi.SetCompatibleWithPlatform(BuildTarget.StandaloneWindows64, true);
                         pi.SetCompatibleWithEditor(true);
@@ -289,7 +289,7 @@ class ONSPAudioPluginUpdater
                         UnityEngine.Debug.LogWarning("Unable to rename the new spatializer plugin: " + e.Message);
                     }
                 }
-
+                
                 if (upgradeDone)
                 {
                     if (unityRunningInBatchmode

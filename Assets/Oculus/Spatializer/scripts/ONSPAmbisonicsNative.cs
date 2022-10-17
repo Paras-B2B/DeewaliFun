@@ -27,7 +27,7 @@ public class ONSPAmbisonicsNative : MonoBehaviour
     // this caches the audio source so that per-frame reflection isnt needed to use them.
     AudioSource source;
 #if !UNITY_5
-    static int numFOAChannels    = 4;  // we are only dealing with 1st order Ambisonics at this time
+	static int numFOAChannels    = 4;  // we are only dealing with 1st order Ambisonics at this time
     static int paramAmbiStat     = 6;  // use this to return internal Ambisonic status
 
     // Staus codes that may return from Ambisonic engine
@@ -48,7 +48,7 @@ public class ONSPAmbisonicsNative : MonoBehaviour
     /// OnEnable this instance.
     /// </summary>
     void OnEnable()
-    {
+	{
 // Unity 4 is deprecated; UNITY_5 still valid with plug-in
 #if UNITY_5
         Debug.Log("Ambisonic ERROR: Ambisonic support in Unity 2017 or higher");
@@ -59,29 +59,29 @@ public class ONSPAmbisonicsNative : MonoBehaviour
         currentStatus = ovrAmbisonicsNativeStatus.Uninitialized;
 
         if (source == null)
-        {
-            Debug.Log("Ambisonic ERROR: AudioSource does not exist.");
-        }
-        else
-        {
-            if(source.spatialize == true)
+		{
+			Debug.Log("Ambisonic ERROR: AudioSource does not exist.");
+		}
+		else
+		{
+			if(source.spatialize == true)
             {
                 Debug.Log("Ambisonic WARNING: Turning spatialize field off for Ambisonic sources.");
                 source.spatialize = false;
             }
 
             if (source.clip == null)
-            {
-                Debug.Log("Ambisonic ERROR: AudioSource does not contain an audio clip.");
-            }
-            else
-            {
-                if(source.clip.channels != numFOAChannels)
-                {
-                    Debug.Log("Ambisonic ERROR: AudioSource clip does not have correct number of channels.");
-                }
-            }
-        }
+			{
+				Debug.Log("Ambisonic ERROR: AudioSource does not contain an audio clip.");
+			}
+			else
+			{
+				if(source.clip.channels != numFOAChannels)
+				{
+					Debug.Log("Ambisonic ERROR: AudioSource clip does not have correct number of channels.");
+				}
+			}
+		}
 #endif
     }
 

@@ -4,16 +4,16 @@ Content     :   Propagation material editor class
                 Attach to geometry to define material properties
 Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Licensed under the Oculus SDK Version 3.5 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
+Licensed under the Oculus SDK Version 3.5 (the "License"); 
+you may not use the Oculus SDK except in compliance with the License, 
+which is provided at the time of installation or download, or which 
 otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
 
 https://developer.oculus.com/licenses/sdk-3.5/
 
-Unless required by applicable law or agreed to in writing, the Oculus SDK
+Unless required by applicable law or agreed to in writing, the Oculus SDK 
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
@@ -27,7 +27,7 @@ using Point = ONSPPropagationMaterial.Point;
 
 [CustomEditor(typeof(ONSPPropagationMaterial))]
 internal sealed class ONSPPropagationMaterialEditor : Editor{
-
+  
   private enum AxisScale{ Lin, Log, Sqr }
 
   private sealed class SpectrumDrawer{
@@ -35,7 +35,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     private const float cutoff = 20000f;
 
     private static readonly Texture2D texture = EditorGUIUtility.whiteTexture;
-
+    
     private static readonly GUIStyle textStyle = new GUIStyle{
 
       alignment = TextAnchor.MiddleLeft,
@@ -54,7 +54,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
 
     private readonly AxisScale scale;
     private readonly Spectrum spectrum;
-
+    
     private bool dragInitiated;
     private bool isDragging;
 
@@ -72,7 +72,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     }
 
     internal SpectrumDrawer(string label, Spectrum spectrum, AxisScale scale){
-
+      
       this.label = label;
       this.spectrum = spectrum;
       this.scale = scale;
@@ -82,7 +82,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     internal void Draw(Event e){
 
       displaySpectrum = EditorGUILayout.Foldout(displaySpectrum, label);
-
+      
       if(displaySpectrum){
 
         EditorGUI.indentLevel++;
@@ -137,9 +137,9 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
       AudioCurveRendering.EndCurveFrame();
 
     }
-
+        
     private void DrawPoints(){
-
+      
       var points = spectrum.points;
       int lines = points.Count > 0 ? points.Count + 2 : 1;
       float height = EditorGUIUtility.singleLineHeight * lines;
@@ -177,7 +177,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
       if(points.Count > 0){
 
         Rect r2 = new Rect(r1.xMax + 9, r1.y + r1.height * 1.125f, 24, r1.height * .75f);
-
+        
         r1.width /= 2;
         EditorGUI.LabelField(r1, "Frequency");
         r1.x += r1.width;
@@ -217,9 +217,9 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
       Rect tick = new Rect(r.xMax + 2, r.y - 1, 4.5f, 2);
 
       for(int i = 0; i <= ticks; i++){
-
+        
         float value = MapData(1 - (float)i / ticks, false);
-
+        
         EditorGUI.DrawRect(tick, textStyle.normal.textColor);
         GUI.Label(label, value.ToString("0.000"), textStyle);
         tick.y += label.height;
@@ -230,7 +230,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     }
 
     private void DrawFrequencyTicks(Rect r){
-
+      
       Rect tick = new Rect(r.x, r.y, 1, r.height);
       Rect label = new Rect(r.x, r.yMax - 1.5f * EditorGUIUtility.singleLineHeight, 32, EditorGUIUtility.singleLineHeight);
 
@@ -268,7 +268,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     }
 
     private void DrawSelected(Rect r){
-
+      
       if(spectrum.points.Count > spectrum.selection){
 
         const float radius = 12;
@@ -461,7 +461,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
       }
 
     }
-
+    
     public static bool MapFrequencyTick(int i, out float frequency){
 
       int power = i / 9 + 1;
@@ -471,7 +471,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
 
       return multiplier == 1;
 
-    }
+    } 
 
     public static float MapFrequency(float f, bool forward = true){
 
@@ -501,11 +501,11 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     absorption.LoadFoldoutState();
     scattering.LoadFoldoutState();
     transmission.LoadFoldoutState();
-
+    
   }
 
   private void OnDisable(){
-
+    
     absorption.SaveFoldoutState();
     scattering.SaveFoldoutState();
     transmission.SaveFoldoutState();
@@ -529,7 +529,7 @@ internal sealed class ONSPPropagationMaterialEditor : Editor{
     absorption.Draw(e);
     scattering.Draw(e);
     transmission.Draw(e);
-
+    
     if(EditorGUI.EndChangeCheck()){
 
       string groupName = Undo.GetCurrentGroupName();

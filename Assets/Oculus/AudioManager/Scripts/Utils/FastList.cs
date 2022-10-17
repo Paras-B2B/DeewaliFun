@@ -46,26 +46,26 @@ public class FastList<T> {
         size++;
     }
 
-    //Add item to end of list if it is unique.
-    public void AddUnique( T item ) {
-        if ( array == null || size == array.Length ) {
-            Allocate();
-        }
-        if ( !Contains( item ) ) {
-            array[size] = item;
-            size++;
-        }
-    }
+	//Add item to end of list if it is unique.
+	public void AddUnique( T item ) {
+		if ( array == null || size == array.Length ) {
+			Allocate();
+		}
+		if ( !Contains( item ) ) {
+			array[size] = item;
+			size++;
+		}
+	}
 
-    //Add items to the end of the list
-    public void AddRange( IEnumerable<T> items ) {
-        foreach ( T item in items ) {
-            Add( item );
-        }
-    }
+	//Add items to the end of the list
+	public void AddRange( IEnumerable<T> items ) {
+		foreach ( T item in items ) {
+			Add( item );
+		}
+	}
 
-    //Insert item at specified index
-    public void Insert(int index, T item) {
+	//Insert item at specified index
+	public void Insert(int index, T item) {
         if (array == null || size == array.Length) {
             Allocate();
         }
@@ -113,7 +113,7 @@ public class FastList<T> {
     public bool RemoveFast(T item) {
         if (array != null) {
             for (int i = 0; i < size; i++) {
-                if ( item.Equals( array[i] )) { //found
+				if ( item.Equals( array[i] )) { //found
                     //Move last item here
                     if (i < (size - 1)) {
                         T lastItem = array[size-1];
@@ -236,8 +236,8 @@ public class FastList<T> {
         }
         return default(T);
     }
-
-    //Allocate more space to internal array.
+    
+    //Allocate more space to internal array. 
     void Allocate() {
         T[] newArray;
         if (array == null) {

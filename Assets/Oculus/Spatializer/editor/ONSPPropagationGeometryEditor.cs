@@ -4,16 +4,16 @@ Content     :   Geometry editor class
                 Attach to geometry to define material properties
 Copyright   :   Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
 
-Licensed under the Oculus SDK Version 3.5 (the "License");
-you may not use the Oculus SDK except in compliance with the License,
-which is provided at the time of installation or download, or which
+Licensed under the Oculus SDK Version 3.5 (the "License"); 
+you may not use the Oculus SDK except in compliance with the License, 
+which is provided at the time of installation or download, or which 
 otherwise accompanies this software in either electronic or hard copy form.
 
 You may obtain a copy of the License at
 
 https://developer.oculus.com/licenses/sdk-3.5/
 
-Unless required by applicable law or agreed to in writing, the Oculus SDK
+Unless required by applicable law or agreed to in writing, the Oculus SDK 
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
@@ -24,32 +24,32 @@ limitations under the License.
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ONSPPropagationGeometry))]
+[CustomEditor(typeof(ONSPPropagationGeometry))] 
 public class ONSPPropagationGeometryEditor : Editor
 {
-    public override void OnInspectorGUI()
-    {
+	public override void OnInspectorGUI()
+	{
         ONSPPropagationGeometry mesh = (ONSPPropagationGeometry)target;
-
-        EditorGUI.BeginChangeCheck();
-
-        bool newIncludeChildMeshes = EditorGUILayout.Toggle( new GUIContent("Include Child Meshes","Include all child meshes into single geometry instance"), mesh.includeChildMeshes );
+		
+		EditorGUI.BeginChangeCheck();
+		
+		bool newIncludeChildMeshes = EditorGUILayout.Toggle( new GUIContent("Include Child Meshes","Include all child meshes into single geometry instance"), mesh.includeChildMeshes );
 
         Separator();
 
         #if UNITY_EDITOR
         string newFilePath = mesh.filePath;
-        bool editedPath = false;
-        bool writeMesh = false;
-        EditorGUI.BeginDisabledGroup( Application.isPlaying );
-        bool newFileEnabled = EditorGUILayout.Toggle( new GUIContent("File Enabled","If set, the serialized mesh file is used as the mesh data source"), mesh.fileEnabled );
-        EditorGUILayout.LabelField( new GUIContent("File Path:","The path to the serialized mesh file, relative to the StreamingAssets directory" ),
+		bool editedPath = false;
+		bool writeMesh = false;
+		EditorGUI.BeginDisabledGroup( Application.isPlaying );
+		bool newFileEnabled = EditorGUILayout.Toggle( new GUIContent("File Enabled","If set, the serialized mesh file is used as the mesh data source"), mesh.fileEnabled );
+		EditorGUILayout.LabelField( new GUIContent("File Path:","The path to the serialized mesh file, relative to the StreamingAssets directory" ),
                                     new GUIContent(mesh.filePathRelative != null ? mesh.filePathRelative : ""));
-
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PrefixLabel( " " );
-        if ( GUILayout.Button("Set Path") )
-        {
+		
+		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.PrefixLabel( " " );
+		if ( GUILayout.Button("Set Path") )
+		{
             if (!System.IO.Directory.Exists(Application.streamingAssetsPath))
             {
                 System.IO.Directory.CreateDirectory(Application.streamingAssetsPath);
@@ -64,21 +64,21 @@ public class ONSPPropagationGeometryEditor : Editor
                 fileName = System.IO.Path.GetFileName(newFilePath);
             }
 
-            newFilePath = EditorUtility.SaveFilePanel(
+			newFilePath = EditorUtility.SaveFilePanel(
                 "Save baked mesh to file", directory, fileName,
                 ONSPPropagationGeometry.GEOMETRY_FILE_EXTENSION);
+			
+			// If the user canceled, use the old path.
+			if ( newFilePath == null || newFilePath.Length == 0 )
+				newFilePath = mesh.filePath;
+			else
+				editedPath = true;
+		}
 
-            // If the user canceled, use the old path.
-            if ( newFilePath == null || newFilePath.Length == 0 )
-                newFilePath = mesh.filePath;
-            else
-                editedPath = true;
-        }
-
-        if ( GUILayout.Button("Bake Mesh to File") )
-            writeMesh = true;
-
-        EditorGUILayout.EndHorizontal();
+		if ( GUILayout.Button("Bake Mesh to File") )
+			writeMesh = true;
+		
+		EditorGUILayout.EndHorizontal();
 
 #if ENABLE_DEBUG_EXPORT_OBJ
         // this allows you to export the geometry to a .obj for viewing
@@ -87,28 +87,28 @@ public class ONSPPropagationGeometryEditor : Editor
             mesh.WriteToObj();
 #endif
 
-        EditorGUI.EndDisabledGroup();
-
+		EditorGUI.EndDisabledGroup();
+		
         #endif
+		
+		if ( EditorGUI.EndChangeCheck() )
+		{
+			Undo.RecordObject( mesh, "Edited OVRAudioMesh" );
 
-        if ( EditorGUI.EndChangeCheck() )
-        {
-            Undo.RecordObject( mesh, "Edited OVRAudioMesh" );
-
-            mesh.includeChildMeshes = newIncludeChildMeshes;
-            mesh.fileEnabled = newFileEnabled;
+			mesh.includeChildMeshes = newIncludeChildMeshes;
+			mesh.fileEnabled = newFileEnabled;
 
             newFilePath = newFilePath.Replace(Application.streamingAssetsPath + "/", "");
 
-            if ( editedPath )
+			if ( editedPath )
                 mesh.filePathRelative = newFilePath;
+			
+			if ( editedPath || writeMesh )
+				mesh.WriteFile();
+		}
 
-            if ( editedPath || writeMesh )
-                mesh.WriteFile();
-        }
-
-        if ( Application.isPlaying && GUILayout.Button("Upload Mesh") )
-            mesh.UploadGeometry();
+		if ( Application.isPlaying && GUILayout.Button("Upload Mesh") )
+			mesh.UploadGeometry();
     }
     void Separator()
     {
